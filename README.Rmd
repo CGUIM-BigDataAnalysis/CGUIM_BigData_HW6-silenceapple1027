@@ -2,28 +2,17 @@
 title: "HIV 感染病例分析"
 output: github_document
 ---
-
-
-## 作業說明 （繳交時請直接刪除這個章節）
-
-作業目的：期末專題暖身
-
-依下列指示，完成期末分析專題作業規劃：
-
-- 分析議題動機 (`10pt`)
-- 資料處理與清洗 (`10pt`) 說明 (`10pt`)
-- 對資料們進行探索式資料分析，圖文並茂佳!(`20pt`)
-
 ## 組員姓名
 黃詩茜
 許定楠
 
 ## 分析議題背景
 愛滋病是由愛滋病毒所引起的疾病。愛滋病毒會破壞人體原本的免疫系統，使病患的身體抵抗力降低，當免疫系統遭到破壞後，原本不會造成生病的病菌，變得有機會感染人類，嚴重時會導致病患死亡。
-愛滋病毒為人類免疫缺乏病毒（Human Immunodeficiency Virus,HIV）的簡稱，是一種破壞免疫系統的病毒。
+愛滋病毒為人類免疫缺乏病毒（Human Immunodeficiency Virus,HIV）的簡稱，是一種破壞免疫系
+統的病毒。
 
 ## 分析動機
-分析動機分析動機
+關心全台感染HIV病毒的病例分布，藉由此次分析提升大眾對於HIV病毒的重視。
 
 ## 使用資料
 資料集描述 : 2003年起各地區、各年齡層、性別之病例數統計表
@@ -34,21 +23,45 @@ output: github_document
 ```{r}
 library(readxl)
 Age_County_Gender_044 <- read_excel("D:/data/Desktop/Age_County_Gender_044.xlsx")
-View(Age_County_Gender_044)
+Age_County_Gender_044
+
 ```
 
 ## 資料處理與清洗
 說明處理資料的步驟
 
+1. 用str()函數總覽Age_County_Gender_044這個資料框的欄位與欄位類別。
+2. 可以發現此Age_County_Gender_044資料框內有13276筆資料(觀察值,obs)，每筆資料有8個欄位 (variables)。
+3. 如果想看資料框內容，可用head()(表二)和tail()(表三)快速瀏覽部分資料。
+4. 使用complete.cases來選出完整的資料列，如果資料列是完整的，則會回傳真TRUE。
+
 處理資料
 ```{r}
-#這是R Code Chunk
+str(Age_County_Gender_044)
+head(Age_County_Gender_044)
+tail(Age_County_Gender_044)
+complete.cases(Age_County_Gender_044)
+
 ```
 
 ## 探索式資料分析
-圖文並茂圖文並茂
+
+1. 使用data.table()函數將data.frame轉為data.table格式，讀取大型資料的速度比使用資料框快上數倍。
+2. 統計2003-2017年HIV確定病例數的人數為30943人。
+3. 表格一的篩選條件為"確定病例數>20"，由此可知2005年的6.7月份、2006年、2011年、2014年感染HIV病毒的病例數偏高。
+4. 表格一的篩選條件為"確定病例數>20"，由此可知以年齡於25-29歲的本國籍男性為主。
+5. 表格一的篩選條件為"確定病例數>20"，由此可知感染HIV病毒的縣市以高雄市、桃園市、新北市居多。
+
+
 ```{r}
 library(dplyr)
+library(data.table)
+Age_County_Gender_044_DT<-data.table(Age_County_Gender_044)
+class(Age_County_Gender_044_DT)
+
+Age_County_Gender_044_DT[,sum(.dots=確定病例數)]
+Age_County_Gender_044_DT[確定病例數>=20]
+
 ```
 
 ## 期末專題分析規劃
